@@ -860,7 +860,6 @@ void *Client_Handler(void *arg)
 		addr temp=path(id);
 		if(node.nodeId == temp.nodeId)
 		{
-			//cout<<"NO :P"<<endl;
 			string route="";
 
 			string closest_node=find_key_value(id);
@@ -912,9 +911,7 @@ void *Client_Handler(void *arg)
 	else if(rev[0]=="shutdown")
 	{
 		shutdown_fn();
-		// cout<<"sshut"<<endl;
 		close(connfd);
-		// cout<<"close_connection"<<endl;
 		exit(0);
 	}
 	else if(rev[0] == "quit")
@@ -978,13 +975,6 @@ void *Client_Listner(void *arg)
 		}
 		node.rTable[i][h[node.nodeId[i]]]=temp;
 	}
-	/*for(int i=0;i<4;i++)
-	{
-		for(int j=0;j<16;j++)
-		{
-			cout<<j<<" "<<node.rTable[i][j].nodeId<<" "<<node.rTable[i][j].port<<" "<<node.rTable[i][j].ip<<endl;
-		}
-	}*/
 	while(1)
 	{
 		int connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
@@ -1134,18 +1124,12 @@ addr retrive()
 
 void remtable()//---------------removing all 
 {
-
-	//string msg = "putkeywhenquit+";
 	for(auto it = mytable.begin(); it != mytable.end() ;it++)
 	{
 		string msg = "putkeywhenquit+";
 		string k = it->first;
-		// cout<<"string k = "<<k<<endl;
 		string val  = it->second;
-		// cout<<"value = "<<val<<endl;
-		// addr temp = mytable2[k];
 		string key = keyhashtable[k];
-		// cout<<"string key = "<<key<<endl;
 		for(auto temp:node.lSet)
 		{
 			if(temp.nodeId=="_")
@@ -1160,14 +1144,6 @@ void remtable()//---------------removing all
 			sendTo(msg,temp.ip, temp.port);
 			sleep(1);
 		}
-		// if(temp.nodeId != node.nodeId)
-		// 	msg = msg+ key + "+" + val + "+" + temp.nodeId + "+" + temp.ip + "+" + temp.port;
-		// else{
-		// 	temp = retrive();
-		// 	msg = msg+ key + "+" + val + "+" + temp.nodeId + "+" + temp.ip + "+" + temp.port;
-		// }
-		// sendTo(msg,temp.ip, temp.port);
-		// sleep(1);
 	}
 }
 
@@ -1275,48 +1251,5 @@ int main()
 		{
 			Command_Handler(comm);
 		} 
-		// else if(ss=="join")
-		// {
-		// 	string nodeId="join1+"+node.nodeId+"+"+node.ip+"+"+node.port;
-		// 	str >> ss;
-		// 	string ip=ss;
-		// 	str >> ss;
-		// 	string port=ss;
-		// 	cout<<"join1"<<endl;
-		// 	sendTo(nodeId,ip,port);
-		// }
-
-		// // 
-
-		// else if(ss=="put")
-		// {
-		// 	addr temp;
-		// 	str >> ss;
-		// 	string key=ss;
-		// 	str >> ss;
-		// 	string val=ss;
-		// 	temp.nodeId = node.nodeId;
-		// 	temp.ip = node.ip;
-		// 	temp.port = node.port;
-		// 	putKey(key,val,temp);
-		// }
-		// else if(ss=="get")
-		// {
-		// 	str >> ss;
-		// 	getKey(ss,node.ip,node.port); 
-		// }
-		// else if(ss=="print")
-		// print(node);
-		// else if(ss=="shutdown")
-		// {
-		// 	shutdown_fn();
-		// 	exit(0);
-		// }
-		// else if(ss == "quit")
-		// {
-		// 	quit_fn();
-		// 	remtable();
-		// 	exit(0);
-		// }
 	}
 }
